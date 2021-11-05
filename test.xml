@@ -1,0 +1,11 @@
+<?xml version="1.0"?>  
+<test>  
+    <case>  
+        <input>3</input>  
+        <output>5</output>  
+    </case>  
+	<case>  
+        <input>79</input>  
+        <output>88</output>  
+    </case>  
+</test>  
