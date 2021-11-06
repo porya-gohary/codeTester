@@ -1,0 +1,19 @@
+<?xml version="1.0"?>  
+<test>  
+    <case>  
+        <input>20</input>  
+        <output>6765</output>  
+    </case>  
+	<case>  
+        <input>6</input>  
+        <output>8</output>  
+    </case>  
+	<case>  
+        <input>12</input>  
+        <output>144</output>  
+    </case>
+	<case>  
+        <input>32</input>  
+        <output>2178309</output>  
+    </case>
+</test>  
