@@ -1,13 +1,20 @@
 package com.tester.codetester;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -31,13 +38,26 @@ public class mainController {
     @FXML
     private ListView testCasesList;
 
+    @FXML
+    private TextField codeAddr;
+
+    @FXML
+    private PieChart pieChart;
 
 
+    @FXML
+    void selectCode(){
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            codeAddr.setText(file.getAbsolutePath());
+        }
+    }
 
 
 
     @FXML
-    void openAction(){
+    void importTestCases(){
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
@@ -46,6 +66,7 @@ public class mainController {
             clearItems();
             addTestCases();
         }
+        updatePieChart();
     }
 
     @FXML
@@ -83,8 +104,8 @@ public class mainController {
 
         assert root != null;
         Scene scene = new Scene(root);
-
         Stage stage = new Stage();
+        stage.setResizable(false);
 
 
 //        stage.initStyle(StageStyle.UNDECORATED);
@@ -97,9 +118,35 @@ public class mainController {
         detailsCotroller detailsCotroller = loader.getController();
         detailsCotroller.setDetails(testCaseList.get(index).getInput(),testCaseList.get(index).getOutput());
 
+
     }
 
+    @FXML
+    void updatePieChart(){
+        pieChart.setLegendVisible(true);
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Failed", 13),
+                new PieChart.Data("Passed",    25));
+        pieChart.setData(pieChartData);
+    }
 
+    @FXML
+    void chartClickHandler(javafx.scene.input.MouseEvent event){
+        final Label caption = new Label("");
+        caption.setTextFill(Color.WHITE);
+        caption.setStyle("-fx-font: 12 arial;");
+        for (final PieChart.Data data : pieChart.getData()) {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    caption.setTranslateX(e.getSceneX());
+                    caption.setTranslateY(e.getSceneY());
+
+                    caption.setText(String.valueOf(data.getPieValue()));
+                }
+            });
+        }
+    }
 
     @FXML
     void exit(ActionEvent actionEvent) {
