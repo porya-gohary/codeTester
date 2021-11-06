@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -17,20 +16,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class mainController {
     List<testCase> testCaseList = new ArrayList<>();
+    String language;
 
     @FXML
     private MenuButton menuButton;
@@ -42,7 +41,13 @@ public class mainController {
     private TextField codeAddr;
 
     @FXML
+    private  TextArea terminalText;
+
+    @FXML
     private PieChart pieChart;
+
+    @FXML
+    private MenuButton selectLanguage;
 
 
     @FXML
@@ -122,6 +127,31 @@ public class mainController {
     }
 
     @FXML
+    void startTesting(){
+        if(Objects.equals(codeAddr.getText(), "")){
+            showErrorMessage("Please select your code.");
+        }else{
+            if (language.equals("Select") || language.equals("")){
+                showErrorMessage("Please select your programming language.");
+            }else{
+                if(language.equals("Python3")){
+                    runPythonCode();
+                }else if(language.equals("C++")){
+
+                }
+            }
+        }
+    }
+
+    @FXML
+    void languageSelector(ActionEvent event){
+        MenuItem mi = (MenuItem) event.getSource();
+        language=mi.getText();
+        selectLanguage.setText(mi.getText());
+    }
+
+
+    @FXML
     void updatePieChart(){
         pieChart.setLegendVisible(true);
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
@@ -151,6 +181,40 @@ public class mainController {
     @FXML
     void exit(ActionEvent actionEvent) {
         Platform.exit();
+    }
+
+    void runPythonCode(){
+        ProcessBuilder processBuilder = new ProcessBuilder("python3", codeAddr.getText());
+        processBuilder.redirectErrorStream(true);
+        InputStream stdout = null;
+        try {
+            Process process = processBuilder.start();
+            stdout=process.getInputStream();
+            int exitCode = process.waitFor();
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
+        String line;
+        try{
+            while((line = reader.readLine()) != null){
+                terminalText.appendText(line+"\n");
+            }
+        }catch(IOException e){
+            System.out.println("Exception in reading output"+ e.toString());
+        }
+
+    }
+
+    public void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     void readXML(File file){

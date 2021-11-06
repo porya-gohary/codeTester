@@ -7,14 +7,14 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tester.codetester.mainController">
     <children>
         <ListView fx:id="testCasesList" layoutX="14.0" layoutY="40.0" onMouseClicked="#openTestCaseDetails" prefHeight="361.0" prefWidth="216.0" />
-        <Button layoutX="239.0" layoutY="115.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="235.0" text="Start Testing" />
+        <Button layoutX="239.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#startTesting" prefHeight="37.0" prefWidth="235.0" text="Start Testing" />
         <Separator layoutX="12.0" layoutY="407.0" prefHeight="5.0" prefWidth="462.0" />
-        <TextArea editable="false" layoutX="12.0" layoutY="417.0" prefHeight="162.0" prefWidth="462.0" />
+        <TextArea fx:id="terminalText" editable="false" layoutX="12.0" layoutY="417.0" prefHeight="162.0" prefWidth="462.0" />
         <Label layoutX="238.0" layoutY="79.0" text="Programming language:" />
-        <MenuButton id="menu:pl" layoutX="372.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Select">
+        <MenuButton id="menu:pl" fx:id="selectLanguage" layoutX="372.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Select">
             <items>
-                <MenuItem mnemonicParsing="false" text="C++" />
-                <MenuItem mnemonicParsing="false" text="Python3" />
+                <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="C++" />
+                <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="Python3" />
             </items>
         </MenuButton>
         <MenuBar prefHeight="25.0" prefWidth="485.0">
