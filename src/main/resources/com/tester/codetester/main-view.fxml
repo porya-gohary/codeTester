@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tester.codetester.mainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tester.codetester.mainController">
     <children>
-        <ListView layoutX="14.0" layoutY="43.0" prefHeight="270.0" prefWidth="216.0" />
+        <ListView fx:id="testCasesList" layoutX="14.0" layoutY="43.0" onMouseClicked="#openTestCaseDetails" prefHeight="270.0" prefWidth="216.0" />
         <Button layoutX="260.0" layoutY="264.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="172.0" text="Start Testing" />
         <Separator layoutX="14.0" layoutY="320.0" prefHeight="3.0" prefWidth="448.0" />
-        <TextArea layoutX="14.0" layoutY="330.0" prefHeight="162.0" prefWidth="448.0" />
+        <TextArea editable="false" layoutX="14.0" layoutY="330.0" prefHeight="162.0" prefWidth="448.0" />
         <Label layoutX="238.0" layoutY="44.0" text="Programming language:" />
         <MenuButton id="menu:pl" layoutX="373.0" layoutY="40.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Select">
             <items>
