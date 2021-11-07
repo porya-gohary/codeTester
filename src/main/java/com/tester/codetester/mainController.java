@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.w3c.dom.*;
+import org.apache.commons.io.FilenameUtils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -66,11 +67,15 @@ public class mainController {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
+            if(!FilenameUtils.getExtension(file.getAbsolutePath()).equals("xml")){
+                showErrorMessage("The selected test-cases file is incorrect!");
+            }else {
 //            openFile(file);
-            readXML(file);
-            clearItems();
-            addTestCases();
-            showPieChart();
+                readXML(file);
+                clearItems();
+                addTestCases();
+                showPieChart();
+            }
         }
     }
 
