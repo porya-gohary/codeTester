@@ -90,6 +90,7 @@ public class pythonThread extends Thread{
         });
         if(data.equals(testCaseList.get(index).getOutput())){
             pass++;
+            controller.testCaseList.get(index).setPass(true);
             Platform.runLater(() -> {
                 controller.appendToTerminal("Test Result: [PASS]"+"\n");
             });
@@ -114,6 +115,7 @@ public class pythonThread extends Thread{
         Platform.runLater(() -> {
             controller.printResult();
             controller.updatePieChart();
+            controller.updateTestCasesListView();
         });
 
     }
