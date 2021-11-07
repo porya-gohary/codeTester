@@ -3,6 +3,7 @@ package com.tester.codetester;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ import java.util.Objects;
 
 public class mainController {
     List<testCase> testCaseList = new ArrayList<>();
-    String language;
+    String language="";
     int pass = 0;
     ObservableList<PieChart.Data> pieChartData;
 
@@ -37,7 +38,10 @@ public class mainController {
     private MenuButton menuButton;
 
     @FXML
-    private ListView testCasesList;
+    private ListView<testCase> testCasesList = new ListView<>();;
+    PseudoClass inactive = PseudoClass.getPseudoClass("inactive");
+    PseudoClass active = PseudoClass.getPseudoClass("active");
+
 
     @FXML
     private TextField codeAddr;
@@ -73,29 +77,17 @@ public class mainController {
 //            openFile(file);
                 readXML(file);
                 clearItems();
-                addTestCases();
+                updateTestCasesListView();
                 showPieChart();
             }
         }
     }
 
     @FXML
-    void addTestCases() {
-        for (int i = 1; i <= testCaseList.size(); i++) {
-            int finalI = i;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    testCasesList.getItems().add("Test Case #" + finalI);
-                }
-            });
-        }
-    }
-
-    @FXML
     void openTestCaseDetails(javafx.scene.input.MouseEvent event) {
         if (event.getSource() == testCasesList && event.getClickCount() == 2 && (testCasesList.getSelectionModel().getSelectedItem() != null)) {
-            showTestCaseWindow(Integer.parseInt(testCasesList.getSelectionModel().getSelectedItem().toString().substring(11)));
+            System.out.println(testCasesList.getSelectionModel().getSelectedIndex());
+            showTestCaseWindow(testCasesList.getSelectionModel().getSelectedIndex());
 
         }
     }
@@ -119,14 +111,51 @@ public class mainController {
 
 
 //        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Test Case #" + index + " Details");
+        stage.setTitle("Test Case #" + (index+1) + " Details");
         stage.setScene(scene);
 
         root.setEffect(new DropShadow());
         stage.show();
-        index--;
         detailsCotroller detailsCotroller = loader.getController();
         detailsCotroller.setDetails(testCaseList.get(index).getInput(), testCaseList.get(index).getOutput());
+
+
+    }
+
+    @FXML
+    void updateTestCasesListView(){
+        testCasesList.getItems().clear();
+        for (int i = 1; i <= testCaseList.size(); i++) {
+            int finalI = i;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    testCasesList.getItems().add(testCaseList.get(finalI -1));
+                }
+            });
+
+        }
+
+        testCasesList.setCellFactory(lv -> new ListCell<testCase>() {
+            @Override
+            protected void updateItem(testCase item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    pseudoClassStateChanged(inactive, false);
+                }else{
+                    if(item.isPass()) {
+                        setText(item.getName() + "\t[PASS]");
+                        pseudoClassStateChanged(active, true);
+                    }
+                    else {
+                        setText(item.getName() + "\t[FAIL]");
+                        pseudoClassStateChanged(inactive, true);
+                    }
+                }
+
+            }
+        });
 
 
     }

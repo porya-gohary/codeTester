@@ -5,3 +5,11 @@
     -fx-hbar-policy: never;
     -fx-vbar-policy: always;
 }
+
+.list-cell:inactive {
+    -fx-text-fill: red ;
+}
+
+.list-cell:active {
+    -fx-text-fill: green ;
+}
