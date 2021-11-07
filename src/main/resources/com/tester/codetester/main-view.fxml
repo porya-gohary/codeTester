@@ -7,16 +7,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tester.codetester.mainController">
     <children>
-        <ListView fx:id="testCasesList" layoutX="14.0" layoutY="40.0" onMouseClicked="#openTestCaseDetails" prefHeight="361.0" prefWidth="198.0" />
-        <Button layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#startTesting" prefHeight="37.0" prefWidth="252.0" text="Start Testing" AnchorPane.leftAnchor="223.0" />
-        <Separator layoutX="12.0" layoutY="407.0" prefHeight="5.0" prefWidth="462.0" />
-        <TextArea fx:id="terminalText" editable="false" layoutX="12.0" layoutY="417.0" prefHeight="162.0" prefWidth="462.0" style="-fx-control-inner-background:#000000; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; -fx-font-family: Consolas;" wrapText="true">
+        <ListView fx:id="testCasesList" layoutX="14.0" layoutY="40.0" onMouseClicked="#openTestCaseDetails" prefHeight="361.0" prefWidth="198.0" AnchorPane.leftAnchor="10.0" />
+        <Button layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#startTesting" prefHeight="37.0" prefWidth="252.0" text="Start Testing" AnchorPane.rightAnchor="10.0" />
+        <Separator layoutX="12.0" layoutY="407.0" prefHeight="5.0" prefWidth="462.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+        <TextArea fx:id="terminalText" editable="false" layoutX="12.0" layoutY="417.0" prefHeight="162.0" prefWidth="462.0" style="-fx-control-inner-background:#000000; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; -fx-font-family: Consolas;" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
         </TextArea>
         <Label layoutX="238.0" layoutY="79.0" text="Programming language:" AnchorPane.leftAnchor="223.0" />
-        <MenuButton id="menu:pl" fx:id="selectLanguage" layoutX="372.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Select" AnchorPane.leftAnchor="372.0">
+        <MenuButton id="menu:pl" fx:id="selectLanguage" layoutX="372.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Select" AnchorPane.leftAnchor="372.0" AnchorPane.rightAnchor="10.0">
             <items>
                 <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="C++" />
                 <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="Python3" />
@@ -45,8 +45,8 @@
             </menus>
         </MenuBar>
       <Label layoutX="223.0" layoutY="43.0" text="Code:" AnchorPane.leftAnchor="223.0" />
-      <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="31.0" prefWidth="180.0" />
-      <Button layoutX="445.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" text="..." AnchorPane.leftAnchor="445.0" />
+      <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="17.0" prefWidth="180.0" />
+      <Button layoutX="450.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" text="..." AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="10.0" />
       <PieChart fx:id="pieChart" labelsVisible="false" layoutX="221.0" layoutY="165.0" onMouseClicked="#chartClickHandler" prefHeight="235.0" prefWidth="252.0" />
     </children>
 </AnchorPane>
