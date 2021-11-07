@@ -17,7 +17,7 @@ public class mainApplication extends Application {
                 FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("main-view.fxml"));
                 Scene scene = null;
                 try {
-                    scene = new Scene(fxmlLoader.load(), 485, 595);
+                    scene = new Scene(fxmlLoader.load(), 485, 620);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

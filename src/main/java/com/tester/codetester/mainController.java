@@ -38,6 +38,12 @@ public class mainController {
     private MenuButton menuButton;
 
     @FXML
+    private ProgressBar progressBar;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
     private ListView<testCase> testCasesList = new ListView<>();;
     PseudoClass inactive = PseudoClass.getPseudoClass("inactive");
     PseudoClass active = PseudoClass.getPseudoClass("active");
@@ -288,5 +294,13 @@ public class mainController {
 
     void setPass(int pass) {
         this.pass = pass;
+    }
+
+    void updateProgressBar(double progress){
+        progressBar.setProgress(progress);
+    }
+
+    void setStatusLabel(String status){
+        statusLabel.setText(status);
     }
 }

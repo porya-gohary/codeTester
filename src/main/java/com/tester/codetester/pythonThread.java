@@ -8,22 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class pythonThread extends Thread{
+public class pythonThread extends Thread {
     private String command;
     private String address;
     mainController controller;
     List<testCase> testCaseList = new ArrayList<>();
-    int pass =0;
+    int pass = 0;
 
-    public pythonThread (mainController controller,List<testCase> testCaseList,String command, String address){
-        this.command=command;
-        this.address=address;
-        this.controller=controller;
-        this.testCaseList=testCaseList;
+    public pythonThread(mainController controller, List<testCase> testCaseList, String command, String address) {
+        this.command = command;
+        this.address = address;
+        this.controller = controller;
+        this.testCaseList = testCaseList;
 
     }
 
-    void createInput(int index){
+    void createInput(int index) {
         try {
             FileWriter fileWriter = new FileWriter("input.txt");
             fileWriter.write(testCaseList.get(index).getInput());
@@ -33,16 +33,16 @@ public class pythonThread extends Thread{
         }
     }
 
-    void runPythonCode(int index){
+    void runPythonCode(int index) {
         Platform.runLater(() -> {
-        controller.appendToTerminal("Test case #"+index+"\n");
+            controller.appendToTerminal("Test case #" + index + "\n");
         });
         ProcessBuilder processBuilder = new ProcessBuilder(command, address);
         processBuilder.redirectErrorStream(true);
         InputStream stdout = null;
         try {
             Process process = processBuilder.start();
-            stdout=process.getInputStream();
+            stdout = process.getInputStream();
             int exitCode = process.waitFor();
 
         } catch (IOException | InterruptedException e) {
@@ -52,21 +52,21 @@ public class pythonThread extends Thread{
         BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
         String line;
         Platform.runLater(() -> {
-            controller.appendToTerminal("std output: "+"\n");
+            controller.appendToTerminal("std output: " + "\n");
         });
-        try{
-            while((line = reader.readLine()) != null){
+        try {
+            while ((line = reader.readLine()) != null) {
                 String finalLine = line;
                 Platform.runLater(() -> {
-                    controller.appendToTerminal(finalLine +"\n");
+                    controller.appendToTerminal(finalLine + "\n");
                 });
             }
-        }catch(IOException e){
-            System.out.println("Exception in reading output"+ e.toString());
+        } catch (IOException e) {
+            System.out.println("Exception in reading output" + e.toString());
         }
     }
 
-    void checkOutput(int index){
+    void checkOutput(int index) {
         String data = "";
         File file = new File("output.txt");
         try {
@@ -80,42 +80,48 @@ public class pythonThread extends Thread{
         }
         String finalData = data;
         Platform.runLater(() -> {
-        controller.appendToTerminal("-------------------------------------------"+"\n");
-        controller.appendToTerminal("Input:"+"\n");
-        controller.appendToTerminal(testCaseList.get(index).getInput()+"\n");
-        controller.appendToTerminal("Expected output:"+"\n");
-        controller.appendToTerminal(testCaseList.get(index).getOutput()+"\n");
-        controller.appendToTerminal("Code output:"+"\n");
-        controller.appendToTerminal(finalData +"\n");
+            controller.appendToTerminal("-------------------------------------------" + "\n");
+            controller.appendToTerminal("Input:" + "\n");
+            controller.appendToTerminal(testCaseList.get(index).getInput() + "\n");
+            controller.appendToTerminal("Expected output:" + "\n");
+            controller.appendToTerminal(testCaseList.get(index).getOutput() + "\n");
+            controller.appendToTerminal("Code output:" + "\n");
+            controller.appendToTerminal(finalData + "\n");
         });
-        if(data.equals(testCaseList.get(index).getOutput())){
+        if (data.equals(testCaseList.get(index).getOutput())) {
             pass++;
             controller.testCaseList.get(index).setPass(true);
             Platform.runLater(() -> {
-                controller.appendToTerminal("Test Result: [PASS]"+"\n");
+                controller.appendToTerminal("Test Result: [PASS]" + "\n");
             });
-        }else{
+        } else {
             Platform.runLater(() -> {
-                controller.appendToTerminal("Test Result: [FAIL]"+"\n");
+                controller.appendToTerminal("Test Result: [FAIL]" + "\n");
             });
         }
         Platform.runLater(() -> {
-            controller.appendToTerminal("============================================"+"\n");
+            controller.appendToTerminal("============================================" + "\n");
         });
     }
 
     public void run() {
+        controller.updateProgressBar(0);
+        Platform.runLater(() -> {
+            controller.setStatusLabel("Testing");
+        });
         for (int i = 0; i < testCaseList.size(); i++) {
             createInput(i);
             runPythonCode(i);
             checkOutput(i);
             controller.setPass(pass);
+            controller.updateProgressBar((double) (i + 1) / testCaseList.size());
         }
 //        controller.updatePieChart();
         Platform.runLater(() -> {
             controller.printResult();
             controller.updatePieChart();
             controller.updateTestCasesListView();
+            controller.setStatusLabel("Done");
         });
 
     }
