@@ -2,11 +2,15 @@ package com.tester.codetester;
 
 public class testCase {
     private String input,output;
+    private String name;
     private int id;
+    private boolean pass;
     public testCase(int id, String input, String output){
         this.id=id;
         this.input=input;
         this.output=output;
+        pass = false;
+        name = "Test Case #"+(id+1);
     }
 
     public String getInput() {
@@ -31,6 +35,22 @@ public class testCase {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isPass() {
+        return pass;
+    }
+
+    public void setPass(boolean pass) {
+        this.pass = pass;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String toString() {
