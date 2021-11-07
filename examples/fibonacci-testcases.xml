@@ -16,4 +16,8 @@
         <input>32</input>  
         <output>2178309</output>  
     </case>
+	<case>  
+        <input>13</input>  
+        <output>209</output>  
+    </case>
 </test>  
