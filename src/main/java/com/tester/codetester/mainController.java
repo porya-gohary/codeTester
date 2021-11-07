@@ -235,6 +235,11 @@ public class mainController {
         Platform.exit();
     }
 
+    @FXML
+    void clearTerminal(){
+        terminalText.clear();
+    }
+
     void runPythonCode() {
 
         pythonThread pythonThread = new pythonThread(this, testCaseList, "python3", codeAddr.getText());
