@@ -29,7 +29,7 @@ import java.util.Objects;
 public class mainController {
     List<testCase> testCaseList = new ArrayList<>();
     String language;
-    int pass=0;
+    int pass = 0;
     ObservableList<PieChart.Data> pieChartData;
 
     @FXML
@@ -42,7 +42,7 @@ public class mainController {
     private TextField codeAddr;
 
     @FXML
-    private  TextArea terminalText;
+    private TextArea terminalText;
 
     @FXML
     private PieChart pieChart;
@@ -52,7 +52,7 @@ public class mainController {
 
 
     @FXML
-    void selectCode(){
+    void selectCode() {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
@@ -62,7 +62,7 @@ public class mainController {
 
 
     @FXML
-    void importTestCases(){
+    void importTestCases() {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
@@ -75,13 +75,13 @@ public class mainController {
     }
 
     @FXML
-    void addTestCases(){
-        for (int i=1;i<=testCaseList.size();i++){
+    void addTestCases() {
+        for (int i = 1; i <= testCaseList.size(); i++) {
             int finalI = i;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    testCasesList.getItems().add("Test Case #"+ finalI);
+                    testCasesList.getItems().add("Test Case #" + finalI);
                 }
             });
         }
@@ -89,7 +89,7 @@ public class mainController {
 
     @FXML
     void openTestCaseDetails(javafx.scene.input.MouseEvent event) {
-        if (event.getSource() == testCasesList && event.getClickCount() == 2 && (testCasesList.getSelectionModel().getSelectedItem() != null)){
+        if (event.getSource() == testCasesList && event.getClickCount() == 2 && (testCasesList.getSelectionModel().getSelectedItem() != null)) {
             showTestCaseWindow(Integer.parseInt(testCasesList.getSelectionModel().getSelectedItem().toString().substring(11)));
 
         }
@@ -114,31 +114,31 @@ public class mainController {
 
 
 //        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Test Case #"+index+" Details");
+        stage.setTitle("Test Case #" + index + " Details");
         stage.setScene(scene);
 
         root.setEffect(new DropShadow());
         stage.show();
         index--;
         detailsCotroller detailsCotroller = loader.getController();
-        detailsCotroller.setDetails(testCaseList.get(index).getInput(),testCaseList.get(index).getOutput());
+        detailsCotroller.setDetails(testCaseList.get(index).getInput(), testCaseList.get(index).getOutput());
 
 
     }
 
     @FXML
-    void startTesting(){
-        if(Objects.equals(codeAddr.getText(), "")){
+    void startTesting() {
+        if (Objects.equals(codeAddr.getText(), "")) {
             showErrorMessage("Please select your code.");
-        }else{
-            if (language.equals("Select") || language.equals("")){
+        } else {
+            if (language.equals("Select") || language.equals("")) {
                 showErrorMessage("Please select your programming language.");
-            }else{
-                if(language.equals("Python3")){
-                    pass=0;
+            } else {
+                if (language.equals("Python3")) {
+                    pass = 0;
                     runPythonCode();
                     terminalText.setWrapText(true);
-                }else if(language.equals("C++")){
+                } else if (language.equals("C++")) {
 
                 }
             }
@@ -146,28 +146,26 @@ public class mainController {
     }
 
     @FXML
-    void languageSelector(ActionEvent event){
+    void languageSelector(ActionEvent event) {
         MenuItem mi = (MenuItem) event.getSource();
-        language=mi.getText();
+        language = mi.getText();
         selectLanguage.setText(mi.getText());
     }
 
 
-    void showPieChart(){
+    void showPieChart() {
         pieChart.setLegendVisible(true);
         pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Failed", testCaseList.size()-pass),
-                new PieChart.Data("Passed",    pass));
+                new PieChart.Data("Failed", testCaseList.size() - pass),
+                new PieChart.Data("Passed", pass));
         pieChart.setData(pieChartData);
     }
 
-    void updatePieChart(){
-        for(PieChart.Data d : pieChartData)
-        {
-            if(d.getName().equals("Failed"))
-            {
-                d.setPieValue(testCaseList.size()-pass);
-            }else {
+    void updatePieChart() {
+        for (PieChart.Data d : pieChartData) {
+            if (d.getName().equals("Failed")) {
+                d.setPieValue(testCaseList.size() - pass);
+            } else {
                 d.setPieValue(pass);
 
             }
@@ -175,7 +173,7 @@ public class mainController {
     }
 
     @FXML
-    void chartClickHandler(javafx.scene.input.MouseEvent event){
+    void chartClickHandler(javafx.scene.input.MouseEvent event) {
         final Label caption = new Label("");
         caption.setTextFill(Color.WHITE);
         caption.setStyle("-fx-font: 12 arial;");
@@ -197,9 +195,9 @@ public class mainController {
         Platform.exit();
     }
 
-    void runPythonCode(){
+    void runPythonCode() {
 
-        pythonThread pythonThread = new pythonThread(this,testCaseList,"python3",codeAddr.getText());
+        pythonThread pythonThread = new pythonThread(this, testCaseList, "python3", codeAddr.getText());
         pythonThread.start();
     }
 
@@ -212,42 +210,49 @@ public class mainController {
         alert.showAndWait();
     }
 
-    void readXML(File file){
+    void readXML(File file) {
         try {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(file);
-            if (document.hasChildNodes())
-            {
+            if (document.hasChildNodes()) {
                 NodeList caseList = document.getElementsByTagName("case");
                 for (int count = 0; count < caseList.getLength(); count++) {
                     Node elemNode = caseList.item(count);
                     if (elemNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) elemNode;
 //                        read input
-                        NodeList inputList=eElement.getElementsByTagName("input");
+                        NodeList inputList = eElement.getElementsByTagName("input");
                         Node inputNode = inputList.item(0);
 //                        read output
-                        NodeList outputList=eElement.getElementsByTagName("output");
+                        NodeList outputList = eElement.getElementsByTagName("output");
                         Node outputNode = outputList.item(0);
-                        testCaseList.add(new testCase(count,inputNode.getTextContent(),outputNode.getTextContent()));
+                        testCaseList.add(new testCase(count, inputNode.getTextContent(), outputNode.getTextContent()));
                     }
                 }
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    void printResult() {
+        double passPercent = ((double) pass / testCaseList.size()) * 100;
+        double failPercent = 100 - passPercent;
+        terminalText.appendText("Final Result:\n");
+        terminalText.appendText("Passed:\t" + passPercent + "%\n");
+        terminalText.appendText("Failed:\t" + failPercent + "%\n");
+        terminalText.appendText("============================================" + "\n");
     }
 
     void clearItems() {
         testCasesList.getItems().clear();
     }
 
-    void appendToTerminal(String text){
+    void appendToTerminal(String text) {
         terminalText.appendText(text);
     }
 
-    void setPass(int pass){
-        this.pass=pass;
+    void setPass(int pass) {
+        this.pass = pass;
     }
 }
