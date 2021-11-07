@@ -22,7 +22,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +29,8 @@ import java.util.Objects;
 public class mainController {
     List<testCase> testCaseList = new ArrayList<>();
     String language;
+    int pass=0;
+    ObservableList<PieChart.Data> pieChartData;
 
     @FXML
     private MenuButton menuButton;
@@ -60,7 +61,6 @@ public class mainController {
     }
 
 
-
     @FXML
     void importTestCases(){
         FileChooser fileChooser = new FileChooser();
@@ -70,8 +70,8 @@ public class mainController {
             readXML(file);
             clearItems();
             addTestCases();
+            showPieChart();
         }
-        updatePieChart();
     }
 
     @FXML
@@ -135,7 +135,9 @@ public class mainController {
                 showErrorMessage("Please select your programming language.");
             }else{
                 if(language.equals("Python3")){
+                    pass=0;
                     runPythonCode();
+                    terminalText.setWrapText(true);
                 }else if(language.equals("C++")){
 
                 }
@@ -151,13 +153,25 @@ public class mainController {
     }
 
 
-    @FXML
-    void updatePieChart(){
+    void showPieChart(){
         pieChart.setLegendVisible(true);
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Failed", 13),
-                new PieChart.Data("Passed",    25));
+        pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Failed", testCaseList.size()-pass),
+                new PieChart.Data("Passed",    pass));
         pieChart.setData(pieChartData);
+    }
+
+    void updatePieChart(){
+        for(PieChart.Data d : pieChartData)
+        {
+            if(d.getName().equals("Failed"))
+            {
+                d.setPieValue(testCaseList.size()-pass);
+            }else {
+                d.setPieValue(pass);
+
+            }
+        }
     }
 
     @FXML
@@ -184,28 +198,9 @@ public class mainController {
     }
 
     void runPythonCode(){
-        ProcessBuilder processBuilder = new ProcessBuilder("python3", codeAddr.getText());
-        processBuilder.redirectErrorStream(true);
-        InputStream stdout = null;
-        try {
-            Process process = processBuilder.start();
-            stdout=process.getInputStream();
-            int exitCode = process.waitFor();
-            
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
-        String line;
-        try{
-            while((line = reader.readLine()) != null){
-                terminalText.appendText(line+"\n");
-            }
-        }catch(IOException e){
-            System.out.println("Exception in reading output"+ e.toString());
-        }
-
+        pythonThread pythonThread = new pythonThread(this,testCaseList,"python3",codeAddr.getText());
+        pythonThread.start();
     }
 
     public void showErrorMessage(String message) {
@@ -246,5 +241,13 @@ public class mainController {
 
     void clearItems() {
         testCasesList.getItems().clear();
+    }
+
+    void appendToTerminal(String text){
+        terminalText.appendText(text);
+    }
+
+    void setPass(int pass){
+        this.pass=pass;
     }
 }
