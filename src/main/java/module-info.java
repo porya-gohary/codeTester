@@ -6,6 +6,7 @@ module com.tester.codetester {
     requires java.xml;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;
+    requires java.desktop;
 
     opens com.tester.codetester to javafx.fxml;
     exports com.tester.codetester;

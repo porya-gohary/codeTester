@@ -28,7 +28,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#viewAbout" text="About" />
                     </items>
                 </Menu>
             </menus>
@@ -48,9 +48,9 @@
                 <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="Python3" />
             </items>
         </MenuButton>
-      <Label layoutX="223.0" layoutY="43.0" text="Code:" AnchorPane.leftAnchor="223.0" />
-      <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="31.0" prefWidth="172.0" />
-      <Button layoutX="441.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" prefHeight="31.0" prefWidth="34.0" text="..." AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="10.0" />
+      <Label layoutX="223.0" layoutY="43.0" text="Code:" AnchorPane.leftAnchor="223.0" AnchorPane.topAnchor="45.0" />
+      <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="31.0" prefWidth="172.0" AnchorPane.topAnchor="39.0" />
+      <Button layoutX="441.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" prefHeight="31.0" prefWidth="34.0" text="..." AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="39.0" />
       <PieChart fx:id="pieChart" labelsVisible="false" layoutX="221.0" layoutY="165.0" onMouseClicked="#chartClickHandler" prefHeight="235.0" prefWidth="252.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="10.0" />
       <ProgressBar fx:id="progressBar" disable="true" layoutX="10.0" layoutY="587.0" prefHeight="25.0" prefWidth="377.0" progress="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Separator layoutX="397.0" layoutY="585.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="7.0" AnchorPane.bottomAnchor="10.0" />

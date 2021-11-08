@@ -15,17 +15,20 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.w3c.dom.*;
 import org.apache.commons.io.FilenameUtils;
+import javafx.application.HostServices;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +38,7 @@ public class mainController {
     String language="";
     int pass = 0;
     ObservableList<PieChart.Data> pieChartData;
+    private HostServices hostServices ;
 
     @FXML
     private MenuButton menuButton;
@@ -276,6 +280,32 @@ public class mainController {
             ex.printStackTrace();
         }
     }
+
+    @FXML
+    void viewAbout(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText(null);
+        FlowPane fp = new FlowPane();
+        Label lbl = new Label("Developed By: Pourya Gohari \nMore information: ");
+        Hyperlink link = new Hyperlink("https://github.com/porya-gohary/codeTester");
+        fp.getChildren().addAll( lbl, link);
+
+        link.setOnAction( (evt) -> {
+            try {
+                java.awt.Desktop.getDesktop().browse(URI.create("https://www.github.com/porya-gohary/codeTester"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } );
+
+        alert.getDialogPane().contentProperty().set( fp );
+
+//        alert.setContentText("Developed By: Pourya Gohari \n More information: "+link);
+        alert.showAndWait();
+    }
+
 
     void runPythonCode() {
 
