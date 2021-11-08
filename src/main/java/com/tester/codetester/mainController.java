@@ -195,7 +195,8 @@ public class mainController {
                     runPythonCode();
                     terminalText.setWrapText(true);
                 } else if (language.equals("C++")) {
-
+                    pass = 0;
+                    runCppCode();
                 }
             }
         }
@@ -280,6 +281,11 @@ public class mainController {
 
         pythonThread pythonThread = new pythonThread(this, testCaseList, "python3", codeAddr.getText());
         pythonThread.start();
+    }
+
+    void runCppCode() {
+        cppThread cppThread = new cppThread(this, testCaseList, codeAddr.getText());
+        cppThread.start();
     }
 
     public void showErrorMessage(String message) {
