@@ -240,6 +240,25 @@ public class mainController {
         terminalText.clear();
     }
 
+    @FXML
+    void saveTerminal(){
+//        open file chooser for save
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+        File file =fileChooser.showSaveDialog(new Stage());
+
+//        write terminal to selected file
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(terminalText.getText());
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     void runPythonCode() {
 
         pythonThread pythonThread = new pythonThread(this, testCaseList, "python3", codeAddr.getText());

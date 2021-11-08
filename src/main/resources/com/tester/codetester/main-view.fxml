@@ -14,6 +14,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#importTestCases" text="Import test cases" />
                   <MenuItem mnemonicParsing="false" onAction="#selectCode" text="Select code" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveTerminal" text="Save output" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Quit" />
                     </items>
                 </Menu>
