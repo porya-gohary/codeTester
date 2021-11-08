@@ -24,7 +24,7 @@
 - [JDK 16 or later](http://jdk.java.net/) (Make sure `JAVA_HOME` is properly set to the JDK installation directory.)
 - [Maven 3.8.3 or later](https://maven.apache.org/)
 
-##📋 Build Instructions
+## 📋 Build Instructions
 These instructions assume a Linux host.
 
  This project use Maven build system. For install Maven follow instruction [here](https://maven.apache.org/install.html). 
