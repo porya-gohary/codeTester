@@ -5,6 +5,7 @@
 <p align="center">
   <a href="#-dependencies">Dependencies</a> •  
   <a href="#-build-instructions">Build</a> •
+<a href="#-contribution">Contribution</a> •
   <a href="#-license">License</a>
 </p>
 <p align="center">
@@ -51,6 +52,11 @@ Next for running `jar` file redirect to `target` folder and execute the `jar` fi
 $ cd target
 $ java -jar codeTester-1.0-SNAPSHOT.jar
 ```
+## 🌱 Contribution
+With your feedback and conversation, you can assist me in developing this application.
+- Open pull request with improvements
+- Discuss feedbacks and bugs in issues
+
 ## 📜 License
 Copyright © 2021 [Pourya Gohari](https://pourya-gohari.ir)
 
