@@ -1,5 +1,10 @@
-.default-color0.chart-pie { -fx-pie-color: red; }
-.default-color1.chart-pie { -fx-pie-color: green; }
+.default-color0.chart-pie {
+    -fx-pie-color: red;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: green;
+}
 
 .text-area .scroll-pane {
     -fx-hbar-policy: never;
@@ -7,9 +12,13 @@
 }
 
 .list-cell:inactive {
-    -fx-text-fill: red ;
+    -fx-text-fill: red;
 }
 
 .list-cell:active {
-    -fx-text-fill: green ;
+    -fx-text-fill: green;
+}
+
+.progress-indicator .percentage {
+    visibility: hidden;
 }

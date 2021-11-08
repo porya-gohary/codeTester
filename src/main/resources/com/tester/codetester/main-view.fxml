@@ -2,6 +2,7 @@
 
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -51,8 +52,14 @@
       <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="17.0" prefWidth="180.0" />
       <Button layoutX="450.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" text="..." AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="10.0" />
       <PieChart fx:id="pieChart" labelsVisible="false" layoutX="221.0" layoutY="165.0" onMouseClicked="#chartClickHandler" prefHeight="235.0" prefWidth="252.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="10.0" />
-      <ProgressBar fx:id="progressBar" disable="true" layoutX="10.0" layoutY="587.0" prefHeight="25.0" prefWidth="404.0" progress="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Separator layoutX="425.0" layoutY="585.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="7.0" AnchorPane.bottomAnchor="10.0" />
+      <ProgressBar fx:id="progressBar" disable="true" layoutX="10.0" layoutY="587.0" prefHeight="25.0" prefWidth="386.0" progress="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Separator layoutX="404.0" layoutY="585.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="7.0" AnchorPane.bottomAnchor="10.0" />
       <Label fx:id="statusLabel" layoutX="433.0" layoutY="589.0" text="Ready" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
+      <ProgressIndicator fx:id="progressIndicator" layoutX="414.0" layoutY="589.0" prefHeight="17.0" prefWidth="18.0" />
+      <ImageView fx:id="readyImage" fitHeight="17.0" fitWidth="18.0" layoutX="415.0" layoutY="589.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ready.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -42,6 +43,12 @@ public class mainController {
     private ProgressBar progressBar;
 
     @FXML
+    private ProgressIndicator progressIndicator;
+
+    @FXML
+    private ImageView readyImage;
+
+    @FXML
     private Label statusLabel;
 
     @FXML
@@ -64,6 +71,7 @@ public class mainController {
 
     @FXML
     public void initialize() {
+        showProgressIndicator(false);
         showPieChart();
     }
 
@@ -340,5 +348,10 @@ public class mainController {
 
     void setStatusLabel(String status){
         statusLabel.setText(status);
+    }
+
+    void showProgressIndicator(boolean show){
+        progressIndicator.setVisible(show);
+        readyImage.setVisible(!show);
     }
 }

@@ -116,6 +116,7 @@ public class pythonThread extends Thread {
         controller.updateProgressBar(0);
         Platform.runLater(() -> {
             controller.setStatusLabel("Testing");
+            controller.showProgressIndicator(true);
         });
 //        start testing
         for (int i = 0; i < testCaseList.size(); i++) {
@@ -133,6 +134,7 @@ public class pythonThread extends Thread {
             controller.printResult(et);
             controller.updatePieChart();
             controller.updateTestCasesListView();
+            controller.showProgressIndicator(false);
             controller.setStatusLabel("Done");
         });
 
