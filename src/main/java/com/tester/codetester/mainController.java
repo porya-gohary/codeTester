@@ -299,12 +299,14 @@ public class mainController {
         }
     }
 
-    void printResult() {
+    void printResult(String elapsedTime) {
         double passPercent = ((double) pass / testCaseList.size()) * 100;
         double failPercent = 100 - passPercent;
         terminalText.appendText("Final Result:\n");
-        terminalText.appendText("Passed:\t" + passPercent + "%\n");
-        terminalText.appendText("Failed:\t" + failPercent + "%\n");
+//        String.format("%.2f", passPercent);
+        terminalText.appendText("Passed:\t" + String.format("%.2f", passPercent) + "%\n");
+        terminalText.appendText("Failed:\t" + String.format("%.2f", failPercent) + "%\n");
+        terminalText.appendText("Elapsed time:\t" + elapsedTime + "\n");
         terminalText.appendText("============================================" + "\n");
     }
 

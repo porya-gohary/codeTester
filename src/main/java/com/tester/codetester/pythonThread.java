@@ -4,9 +4,12 @@ import javafx.application.Platform;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 public class pythonThread extends Thread {
     private String command;
@@ -14,6 +17,7 @@ public class pythonThread extends Thread {
     mainController controller;
     List<testCase> testCaseList = new ArrayList<>();
     int pass = 0;
+    Instant start, end;
 
     public pythonThread(mainController controller, List<testCase> testCaseList, String command, String address) {
         this.command = command;
@@ -105,10 +109,15 @@ public class pythonThread extends Thread {
     }
 
     public void run() {
+//        set the start time
+        start=Instant.now();
+
+//        update progressbar
         controller.updateProgressBar(0);
         Platform.runLater(() -> {
             controller.setStatusLabel("Testing");
         });
+//        start testing
         for (int i = 0; i < testCaseList.size(); i++) {
             createInput(i);
             runPythonCode(i);
@@ -116,9 +125,12 @@ public class pythonThread extends Thread {
             controller.setPass(pass);
             controller.updateProgressBar((double) (i + 1) / testCaseList.size());
         }
+        end = Instant.now();
+        Duration timeElapsed = Duration.between(start, end);
+        String et=DurationFormatUtils.formatDuration(timeElapsed.toMillis(), "HH:mm:ss", true);
 //        controller.updatePieChart();
         Platform.runLater(() -> {
-            controller.printResult();
+            controller.printResult(et);
             controller.updatePieChart();
             controller.updateTestCasesListView();
             controller.setStatusLabel("Done");

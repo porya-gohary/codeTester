@@ -20,4 +20,16 @@
         <input>13</input>  
         <output>209</output>  
     </case>
+	<case>  
+        <input>10</input>  
+        <output>55</output>  
+    </case>
+	<case>  
+        <input>26</input>  
+        <output>121393</output>  
+    </case>
+	<case>  
+        <input>40</input>  
+        <output>102334155</output>  
+    </case>
 </test>  
