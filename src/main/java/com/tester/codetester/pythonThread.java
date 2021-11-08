@@ -108,6 +108,13 @@ public class pythonThread extends Thread {
         });
     }
 
+    void removeTempfiles(){
+        File file= new File("input.txt");
+        file.delete();
+        file= new File("output.txt");
+        file.delete();
+    }
+
     public void run() {
 //        set the start time
         start=Instant.now();
@@ -129,7 +136,8 @@ public class pythonThread extends Thread {
         end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
         String et=DurationFormatUtils.formatDuration(timeElapsed.toMillis(), "HH:mm:ss", true);
-//        controller.updatePieChart();
+
+        removeTempfiles();
         Platform.runLater(() -> {
             controller.printResult(et);
             controller.updatePieChart();
