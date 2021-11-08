@@ -21,6 +21,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clearTestCases" text="Clear test cases" />
                         <MenuItem mnemonicParsing="false" onAction="#clearTerminal" text="Clear terminal" />
                     </items>
                 </Menu>
@@ -32,7 +33,7 @@
             </menus>
         </MenuBar>
         <ListView fx:id="testCasesList" layoutX="14.0" layoutY="40.0" onMouseClicked="#openTestCaseDetails" prefHeight="361.0" prefWidth="198.0" AnchorPane.leftAnchor="10.0" />
-        <Button layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#startTesting" prefHeight="37.0" prefWidth="252.0" text="Start Testing" AnchorPane.rightAnchor="10.0" />
+        <Button layoutX="225.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#startTesting" prefHeight="37.0" prefWidth="252.0" text="Start Testing" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="10.0" />
         <Separator layoutX="10.0" layoutY="407.0" prefHeight="5.0" prefWidth="462.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
         <TextArea fx:id="terminalText" editable="false" layoutX="10.0" layoutY="417.0" prefHeight="162.0" prefWidth="462.0" style="-fx-control-inner-background:#000000; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; -fx-font-family: Consolas;" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <font>
@@ -49,7 +50,7 @@
       <Label layoutX="223.0" layoutY="43.0" text="Code:" AnchorPane.leftAnchor="223.0" />
       <TextField fx:id="codeAddr" layoutX="262.0" layoutY="39.0" prefHeight="17.0" prefWidth="180.0" />
       <Button layoutX="450.0" layoutY="39.0" mnemonicParsing="false" onAction="#selectCode" text="..." AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="10.0" />
-      <PieChart fx:id="pieChart" labelsVisible="false" layoutX="221.0" layoutY="165.0" onMouseClicked="#chartClickHandler" prefHeight="235.0" prefWidth="252.0" />
+      <PieChart fx:id="pieChart" labelsVisible="false" layoutX="221.0" layoutY="165.0" onMouseClicked="#chartClickHandler" prefHeight="235.0" prefWidth="252.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="10.0" />
       <ProgressBar fx:id="progressBar" disable="true" layoutX="10.0" layoutY="587.0" prefHeight="25.0" prefWidth="404.0" progress="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Separator layoutX="425.0" layoutY="585.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="7.0" AnchorPane.bottomAnchor="10.0" />
       <Label fx:id="statusLabel" layoutX="433.0" layoutY="589.0" text="Ready" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />

@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.w3c.dom.*;
 import org.apache.commons.io.FilenameUtils;
 
@@ -44,7 +45,7 @@ public class mainController {
     private Label statusLabel;
 
     @FXML
-    private ListView<testCase> testCasesList = new ListView<>();;
+    private ListView<testCase> testCasesList = new ListView<>();
     PseudoClass inactive = PseudoClass.getPseudoClass("inactive");
     PseudoClass active = PseudoClass.getPseudoClass("active");
 
@@ -61,6 +62,10 @@ public class mainController {
     @FXML
     private MenuButton selectLanguage;
 
+    @FXML
+    public void initialize() {
+        showPieChart();
+    }
 
     @FXML
     void selectCode() {
@@ -82,9 +87,8 @@ public class mainController {
             }else {
 //            openFile(file);
                 readXML(file);
-                clearItems();
                 updateTestCasesListView();
-                showPieChart();
+                updatePieChart();
             }
         }
     }
@@ -92,7 +96,6 @@ public class mainController {
     @FXML
     void openTestCaseDetails(javafx.scene.input.MouseEvent event) {
         if (event.getSource() == testCasesList && event.getClickCount() == 2 && (testCasesList.getSelectionModel().getSelectedItem() != null)) {
-            System.out.println(testCasesList.getSelectionModel().getSelectedIndex());
             showTestCaseWindow(testCasesList.getSelectionModel().getSelectedIndex());
 
         }
@@ -113,6 +116,7 @@ public class mainController {
         assert root != null;
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.initStyle(StageStyle.UTILITY);
         stage.setResizable(false);
 
 
@@ -152,10 +156,12 @@ public class mainController {
                 }else{
                     if(item.isPass()) {
                         setText(item.getName() + "\t[PASS]");
+                        pseudoClassStateChanged(inactive, false);
                         pseudoClassStateChanged(active, true);
                     }
                     else {
                         setText(item.getName() + "\t[FAIL]");
+                        pseudoClassStateChanged(active, false);
                         pseudoClassStateChanged(inactive, true);
                     }
                 }
@@ -173,7 +179,9 @@ public class mainController {
         } else {
             if (language.equals("Select") || language.equals("")) {
                 showErrorMessage("Please select your programming language.");
-            } else {
+            } else  if(testCaseList.size()==0){
+                showErrorMessage("Please select your test cases file.");
+            }else {
                 if (language.equals("Python3")) {
                     pass = 0;
                     runPythonCode();
@@ -194,9 +202,10 @@ public class mainController {
 
 
     void showPieChart() {
+//        set dummy numbers for just show the chart
         pieChart.setLegendVisible(true);
         pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Failed", testCaseList.size() - pass),
+                new PieChart.Data("Failed", 10 - pass),
                 new PieChart.Data("Passed", pass));
         pieChart.setData(pieChartData);
     }
@@ -275,6 +284,7 @@ public class mainController {
     }
 
     void readXML(File file) {
+        int index = testCaseList.size();
         try {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(file);
@@ -290,7 +300,8 @@ public class mainController {
 //                        read output
                         NodeList outputList = eElement.getElementsByTagName("output");
                         Node outputNode = outputList.item(0);
-                        testCaseList.add(new testCase(count, inputNode.getTextContent(), outputNode.getTextContent()));
+                        testCaseList.add(new testCase(index, inputNode.getTextContent(), outputNode.getTextContent()));
+                        index++;
                     }
                 }
             }
@@ -303,15 +314,16 @@ public class mainController {
         double passPercent = ((double) pass / testCaseList.size()) * 100;
         double failPercent = 100 - passPercent;
         terminalText.appendText("Final Result:\n");
-//        String.format("%.2f", passPercent);
         terminalText.appendText("Passed:\t" + String.format("%.2f", passPercent) + "%\n");
         terminalText.appendText("Failed:\t" + String.format("%.2f", failPercent) + "%\n");
         terminalText.appendText("Elapsed time:\t" + elapsedTime + "\n");
         terminalText.appendText("============================================" + "\n");
     }
 
-    void clearItems() {
+    @FXML
+    void clearTestCases() {
         testCasesList.getItems().clear();
+        testCaseList.clear();
     }
 
     void appendToTerminal(String text) {

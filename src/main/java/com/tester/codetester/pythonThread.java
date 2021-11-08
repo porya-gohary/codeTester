@@ -39,7 +39,7 @@ public class pythonThread extends Thread {
 
     void runPythonCode(int index) {
         Platform.runLater(() -> {
-            controller.appendToTerminal("Test case #" + index + "\n");
+            controller.appendToTerminal("Test case #" + (index+1) + "\n");
         });
         ProcessBuilder processBuilder = new ProcessBuilder(command, address);
         processBuilder.redirectErrorStream(true);
